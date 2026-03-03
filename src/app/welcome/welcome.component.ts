@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import Keycloak from 'keycloak-js';
 import { HttpClient } from '@angular/common/http';
-import { KeycloakService } from 'keycloak-angular';
 
 interface UserInfo {
   username: string;
@@ -179,10 +180,9 @@ export class WelcomeComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  constructor(
-    private http: HttpClient,
-    private keycloak: KeycloakService
-  ) {}
+  private keycloak = inject(Keycloak);
+  private http = inject(HttpClient);
+
 
   ngOnInit() {
     this.loadUserInfo();
@@ -213,6 +213,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   logout() {
-    this.keycloak.logout(window.location.origin + '/login');
+    this.keycloak.logout();
   }
+
 }

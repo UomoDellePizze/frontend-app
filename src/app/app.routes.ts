@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,7 +17,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./welcome/welcome.component').then((m) => m.WelcomeComponent),
     // Rotta protetta: solo utenti autenticati possono accedere
-    canActivate: [AuthGuard],
+     canActivate: [authGuard],
   },
   {
     path: '**',

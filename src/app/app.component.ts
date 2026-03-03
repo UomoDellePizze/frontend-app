@@ -1,31 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { Component, inject, OnInit, Query } from '@angular/core';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterOutlet } from '@angular/router';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [WelcomeComponent,RouterOutlet],          // we will show this when logged in
-  templateUrl: './app.html'
+  templateUrl: './app.html',
+  template: '<app-welcome></app-welcome><router-outlet></router-outlet>',
 })
-export class AppComponent implements OnInit {
+export class AppComponent{
   loggedIn = false;
   checking = true;   // optional – show a spinner while Keycloak responds
+  private readonly keycloak = inject(Keycloak);
 
-  constructor(private keycloak: KeycloakService) {}
-
-  async ngOnInit() {
-    // ask Keycloak for the current state
-    this.loggedIn = await this.keycloak.isLoggedIn();
-    this.checking = false;
-  }
 
   login(): void {
+    console.log("login");
     this.keycloak.login();        // redirect to Keycloak login page
   }
 
   logout(): void {
-    this.keycloak.logout(window.location.origin);
+    console.log("logout");
+    this.keycloak.logout();
   }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-login',
@@ -81,18 +81,10 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class LoginComponent implements OnInit {
-
-  constructor(
-    private keycloak: KeycloakService,
-    private router: Router
-  ) {}
-
+  private keycloak = inject(Keycloak);
+  private router = inject(Router);
   async ngOnInit() {
-    // Se l'utente è già loggato, vai direttamente alla welcome page
-    const isLogged = await this.keycloak.isLoggedIn();
-    if (isLogged) {
-      this.router.navigate(['/welcome']);
-    }
+    this.router.navigate(['/welcome']);
   }
 
   login() {
