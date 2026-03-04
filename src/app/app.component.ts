@@ -1,14 +1,13 @@
 import { Component, inject, OnInit, Query } from '@angular/core';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterOutlet } from '@angular/router';
 import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [WelcomeComponent,RouterOutlet],          // we will show this when logged in
+  imports: [RouterOutlet],
   templateUrl: './app.html',
-  template: '<app-welcome></app-welcome><router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet>',
 })
 export class AppComponent{
   loggedIn = false;
