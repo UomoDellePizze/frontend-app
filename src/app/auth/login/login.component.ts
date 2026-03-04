@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import Keycloak from 'keycloak-js';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-login',
@@ -81,7 +81,7 @@ import Keycloak from 'keycloak-js';
   `]
 })
 export class LoginComponent implements OnInit {
-  private keycloak = inject(Keycloak);
+  private keycloak = inject(KeycloakService);
   private router = inject(Router);
   async ngOnInit() {
     this.router.navigate(['/welcome']);

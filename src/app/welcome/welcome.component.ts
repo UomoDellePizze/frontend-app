@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import Keycloak from 'keycloak-js';
 import { HttpClient } from '@angular/common/http';
+import { KeycloakService } from 'keycloak-angular';
 
 interface UserInfo {
   username: string;
@@ -180,7 +179,7 @@ export class WelcomeComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  private keycloak = inject(Keycloak);
+  private keycloak = inject(KeycloakService);
   private http = inject(HttpClient);
 
 
@@ -192,7 +191,7 @@ export class WelcomeComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.http.get<UserInfo>('http://localhost:8081/api/me').subscribe({
+    this.http.get<UserInfo>('http://localhost:8080/api/me').subscribe({
       next: (user) => {
         this.user = user;
         this.loading = false;
