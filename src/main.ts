@@ -7,22 +7,22 @@ import { KeycloakService } from 'keycloak-angular';
 import { keycloakInterceptor } from './app/app.config';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
-const keycloak = new KeycloakService();
-
-await keycloak.init({
-  config: {
-    url: 'http://localhost:8080',
-    realm: 'myapp',
-    clientId: 'angular-client'
-  },
-  initOptions: { onLoad: 'login-required' }
-});
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes),
+
+    provideKeycloak({
+      config: {
+        url: 'http://localhost:8080',
+        realm: 'myapp',
+        clientId: 'angular-client' },
+        initOptions: {
+          onLoad: 'login-required'
+        },
+
+      }),
+      provideRouter(routes),
       provideHttpClient(withInterceptors([keycloakInterceptor])),
-    { provide: KeycloakService, useValue: keycloak }
   ]
 });
 
