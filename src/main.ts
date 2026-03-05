@@ -4,7 +4,8 @@ import { AppComponent} from './app/app.component';
 import { routes } from './app/app.routes';
 import { provideKeycloak, ProvideKeycloakOptions } from 'keycloak-angular';
 import { KeycloakService } from 'keycloak-angular';
-
+import { keycloakInterceptor } from './app/app.config';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 const keycloak = new KeycloakService();
 
@@ -20,6 +21,7 @@ await keycloak.init({
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
+      provideHttpClient(withInterceptors([keycloakInterceptor])),
     { provide: KeycloakService, useValue: keycloak }
   ]
 });

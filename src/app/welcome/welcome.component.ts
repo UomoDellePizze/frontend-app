@@ -191,7 +191,7 @@ export class WelcomeComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.http.get<UserInfo>('http://localhost:8080/api/me').subscribe({
+    this.http.get<UserInfo>('http://localhost:8081/api/me').subscribe({
       next: (user) => {
         this.user = user;
         this.loading = false;
