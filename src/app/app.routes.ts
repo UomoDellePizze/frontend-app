@@ -10,12 +10,12 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./auth/login/login.component').then((m) => m.LoginComponent),
+      import('./auth/login/login').then((m) => m.Login),
   },
   {
     path: 'welcome',
     loadComponent: () =>
-      import('./welcome/welcome.component').then((m) => m.WelcomeComponent),
+      import('./welcome/welcome').then((m) => m.Welcome),
     // Rotta protetta: solo utenti autenticati possono accedere
      canActivate: [authGuard],
   },
