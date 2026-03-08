@@ -1,18 +1,20 @@
 import { Component, inject, OnInit, Query } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
+import Keycloak from 'keycloak-js';
+import { Welcome } from './welcome/welcome';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  template: '<router-outlet></router-outlet>',
+  imports: [RouterOutlet,Welcome],
+  templateUrl: './app.html'
 })
 export class AppComponent{
   loggedIn = false;
-  checking = true;   // optional – show a spinner while Keycloak responds
-  private readonly keycloak = inject(KeycloakService);
+  checking = true;
+  private keycloak: any | null = null;
+  constructor() {
+    this.keycloak = inject(Keycloak);
+  }
 
 
   login(): void {

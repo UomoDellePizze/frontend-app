@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './user.html',
-  styleUrl: './user.css',
+  styleUrls: ['./user.css']
 })
 export class User {}

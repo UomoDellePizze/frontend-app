@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { environment } from "../../../environments/environment.prod";
+import { inject, Injectable } from "@angular/core";
+import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { RegisterRequest } from "../models/register-request.model";
 
@@ -10,7 +10,7 @@ export class AuthService {
 
   private api = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   register(data: RegisterRequest) {
     return this.http.post(`${this.api}/api/auth/register`, data);

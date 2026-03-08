@@ -1,28 +1,23 @@
+// main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
-import { AppComponent} from './app/app.component';
-import { routes } from './app/app.routes';
-import { provideKeycloak, ProvideKeycloakOptions } from 'keycloak-angular';
-import { KeycloakService } from 'keycloak-angular';
-import { keycloakInterceptor } from './app/app.config';
+import { APP_INITIALIZER } from '@angular/core';
+import { AppComponent } from './app/app.component';
+import { authInterceptor, keycloak } from './app/app.config';
+import Keycloak from 'keycloak-js';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
+export function initializeKeycloak() {
+  return async () =>{await keycloak.init({ onLoad: 'login-required' });}
+}
 
 bootstrapApplication(AppComponent, {
   providers: [
-
-    provideKeycloak({
-      config: {
-        url: 'http://localhost:8080',
-        realm: 'myapp',
-        clientId: 'angular-client' },
-        initOptions: {
-          onLoad: 'login-required'
-        },
-
-      }),
-      provideRouter(routes),
-      provideHttpClient(withInterceptors([keycloakInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    { provide: Keycloak, useValue: keycloak },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true
+    }
   ]
 });
-

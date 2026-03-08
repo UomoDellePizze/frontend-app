@@ -1,13 +1,17 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { CommonModule } from '@angular/common';
 import { RegisterRequest } from "../../core/models/register-request.model";
 import { AuthService } from "../../core/services/auth.service";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  standalone: true,
+  imports: [FormsModule,CommonModule],
+  templateUrl: './register.html',
+  styleUrls: ['./register.css']
 })
-export class RegisterComponent {
+export class Register {
 
   form: RegisterRequest = {
     username: '',
@@ -17,7 +21,7 @@ export class RegisterComponent {
     lastName: ''
   };
 
-  constructor(private authService: AuthService) {}
+  private authService = inject(AuthService);
 
   register() {
     this.authService.register(this.form).subscribe({

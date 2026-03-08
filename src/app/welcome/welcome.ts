@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import Keycloak from 'keycloak-js';
+import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 interface UserInfo {
   username: string;
   email: string;
@@ -9,9 +11,9 @@ interface UserInfo {
 }
 @Component({
   selector: 'app-welcome',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './welcome.html',
-  styleUrl: './welcome.css',
+  styleUrls: ['./welcome.css'],
 })
 export class Welcome implements OnInit {
 
@@ -19,7 +21,7 @@ export class Welcome implements OnInit {
   loading = true;
   error: string | null = null;
 
-  private keycloak = inject(KeycloakService);
+  private keycloak = inject(Keycloak);
   private http = inject(HttpClient);
 
 
@@ -31,7 +33,7 @@ export class Welcome implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.http.get<UserInfo>('http://localhost:8081/api/me').subscribe({
+    this.http.get<UserInfo>(environment.apiUrl + '/api/me').subscribe({
       next: (user) => {
         this.user = user;
         this.loading = false;
