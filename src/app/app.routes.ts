@@ -1,26 +1,25 @@
 import { Routes } from '@angular/router';
-import { canActivateAuthRole } from './guards/auth.guard';
-
+import { authGuard } from './guards/auth.guard';
+import { Welcome } from './welcome/welcome';
+import { Login } from './auth/login/login';
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'welcome',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: 'login',
-    loadComponent: () =>
-      import('./auth/login/login').then((m) => m.Login),
+    component: Login
   },
   {
     path: 'welcome',
-    loadComponent: () =>
-      import('./welcome/welcome').then((m) => m.Welcome),
+    component: Welcome,
     // Rotta protetta: solo utenti autenticati possono accedere
-     canActivate: [canActivateAuthRole],
+    canActivate: [authGuard]
   },
   {
     path: '**',
-    redirectTo: 'welcome',
+    redirectTo: 'welcome'
   },
 ];

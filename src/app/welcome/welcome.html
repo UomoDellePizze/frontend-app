@@ -5,40 +5,54 @@
   </nav>
 
   <main class="content">
-    <div *ngIf="loading" class="loading">
+
+    <!-- loading -->
+    <div *ngIf="loading()" class="loading">
       <div class="spinner"></div>
       <p>Caricamento...</p>
     </div>
 
-    <div *ngIf="!loading && user" class="card">
+    <!-- user -->
+    <div *ngIf="!loading() && user() as u" class="card">
+
       <div class="avatar">{{ getInitials() }}</div>
-      <h1>Benvenuto, {{ user.firstName || user.username }}! 👋</h1>
+
+      <h1>
+        Benvenuto, {{ u.firstName || u.username }}! 👋
+      </h1>
+
       <p class="subtitle">Accesso effettuato con successo</p>
 
       <div class="info-grid">
         <div class="info-item">
           <span class="label">Username</span>
-          <span class="value">{{ user.username }}</span>
+          <span class="value">{{ u.username }}</span>
         </div>
+
         <div class="info-item">
           <span class="label">Email</span>
-          <span class="value">{{ user.email }}</span>
+          <span class="value">{{ u.email }}</span>
         </div>
-        <div *ngIf="user.firstName" class="info-item">
+
+        <div *ngIf="u.firstName" class="info-item">
           <span class="label">Nome</span>
-          <span class="value">{{ user.firstName }} {{ user.lastName }}</span>
+          <span class="value">{{ u.firstName }} {{ u.lastName }}</span>
         </div>
       </div>
 
       <div class="badge">
         <span>✅ Autenticato via Keycloak</span>
       </div>
+
     </div>
 
-    <div *ngIf="error" class="error-card">
-      <p>{{ error }}</p>
-      <button class="btn-retry" (click)="loadUserInfo()">Riprova</button>
+    <!-- error -->
+    <div *ngIf="error()" class="error-card">
+      <p>{{ error() }}</p>
+      <button class="btn-retry" (click)="userService.loadUser()">
+        Riprova
+      </button>
     </div>
+
   </main>
 </div>
-

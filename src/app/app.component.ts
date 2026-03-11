@@ -1,21 +1,19 @@
-import { Component, inject, OnInit, Query } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import Keycloak from 'keycloak-js';
 import { Welcome } from './welcome/welcome';
+import { CommonModule } from '@angular/common';
+import { authGuard } from './guards/auth.guard';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Welcome],
+  imports: [CommonModule,RouterModule,Welcome],
   templateUrl: './app.html'
 })
 export class AppComponent{
   loggedIn = false;
   checking = true;
-  private keycloak: any | null = null;
-  constructor() {
-    this.keycloak = inject(Keycloak);
-  }
-
+  private keycloak=inject(Keycloak);
 
   login(): void {
     console.log("login");

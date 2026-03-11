@@ -1,19 +1,24 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Keycloak from 'keycloak-js';
 import { AuthService } from '../../core/services/auth.service';
 import { RegisterRequest } from '../../core/models/register-request.model';
 @Component({
   selector: 'app-login',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
+  standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class Login implements OnInit {
-  private router = inject(Router);
-  private authService = inject(AuthService);
-  private keycloak = inject(Keycloak);
+  constructor(
+    private router:Router,private authService: AuthService,private keycloak: Keycloak
+){
+    this.router=inject(Router);
+    this.authService=inject(AuthService);
+    this.keycloak=inject(Keycloak);
+  }
     form: RegisterRequest = {
     username: '',
     email: '',
@@ -21,8 +26,8 @@ export class Login implements OnInit {
     firstName: '',
     lastName: ''
   };
-  async ngOnInit() {
-    //this.router.navigate(['']);
+  ngOnInit() {
+    this.router.navigate(['/welcome']);
   }
 
   login() {

@@ -40,7 +40,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req);
 };
 // keycloak.ts
-
+export function initializeKeycloak() { return async () =>{await keycloak.init({ onLoad: 'login-required' });} }
 export const keycloak = new Keycloak({
   url: environment.keycloakUrl,
   realm: environment.realm,
@@ -49,19 +49,20 @@ export const keycloak = new Keycloak({
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([keycloakInterceptor])
     ),
-    provideKeycloak({
-    config: {
-      url: environment.keycloakUrl,
-      realm: environment.realm,
-      clientId: environment.clientId,
+
+    { provide: Keycloak, useValue: keycloak },
+
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true
     },
-      initOptions: {
-        onLoad: 'login-required'
-      },
-  }) ,
-] ,
+
+    provideRouter(routes)
+
+  ]
 };
