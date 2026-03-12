@@ -29,18 +29,9 @@ export const keycloakInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if (keycloak.token) {
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${keycloak.token}`
-      }
-    });
-  }
-  return next(req);
-};
+
 // keycloak.ts
-export function initializeKeycloak() { return async () =>{await keycloak.init({ onLoad: 'login-required' });} }
+export function initializeKeycloak() { return async () =>{await keycloak.init({ onLoad: 'login-required' }).catch((error) => { console.error('Error initializing Keycloak:', error); });} }
 export const keycloak = new Keycloak({
   url: environment.keycloakUrl,
   realm: environment.realm,

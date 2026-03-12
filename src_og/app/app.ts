@@ -10,3 +10,7 @@ import { RouterOutlet } from '@angular/router';
 export class App {
   protected readonly title = signal('frontend-app');
 }
+
+//dati due utenti , uno fornisce un calendario popolato, l'altro prenota: m utenti e calendari, n prenotazioni
+//modello ER
+//utilizzo kafka per il microservizio
