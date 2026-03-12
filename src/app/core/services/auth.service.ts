@@ -11,6 +11,9 @@ export class AuthService {
   private api = environment.apiUrl;
 
   private http = inject(HttpClient);
+  userExists(id: string) {
+    return this.http.get(`${this.api}/api/users/${id}`);
+  }
 
   register(data: RegisterRequest) {
     return this.http.post(`${this.api}/api/auth/register`, data);

@@ -21,7 +21,6 @@ export class Register {
     firstName: '',
     lastName: ''
   };
-  constructor() { }
   private authService = inject(AuthService);
 
   register() {

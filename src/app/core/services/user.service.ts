@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserInfo } from '../models/user-info.model';
 import Keycloak from 'keycloak-js';
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
