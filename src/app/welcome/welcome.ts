@@ -13,7 +13,7 @@ import { UserService } from '../core/services/user.service';
 })
 export class Welcome implements OnInit {
   private keycloak = inject(Keycloak);
-   userService = inject(UserService);
+  userService = inject(UserService);
 
   user = this.userService.user;
   loading = this.userService.loading;

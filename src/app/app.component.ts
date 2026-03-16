@@ -7,7 +7,7 @@ import { authGuard } from './guards/auth.guard';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule,RouterModule,Welcome],
+  imports: [CommonModule,RouterModule],
   templateUrl: './app.html'
 })
 export class AppComponent{

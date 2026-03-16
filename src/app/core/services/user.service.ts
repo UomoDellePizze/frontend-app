@@ -27,6 +27,7 @@ export class UserService {
       next: (user) => {
         this.user.set(user);
         this.loading.set(false);
+        console.log(user);
       },
       error: (err) => {
         console.error(err);
