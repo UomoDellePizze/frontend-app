@@ -3,45 +3,39 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Keycloak from 'keycloak-js';
 import { AuthService } from '../../core/services/auth.service';
-import { RegisterRequest } from '../../core/models/register-request.model';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
-  imports: [CommonModule,RouterModule],
+  imports: [FormsModule,CommonModule,RouterModule],
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class Login implements OnInit {
-  constructor(
-    private router:Router,private authService: AuthService,private keycloak: Keycloak
-){
-    this.router=inject(Router);
-    this.authService=inject(AuthService);
-    this.keycloak=inject(Keycloak);
-  }
-    form: RegisterRequest = {
+
+  private router=inject(Router);
+  private authService=inject(AuthService);
+  form = {
     username: '',
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: ''
+    password: ''
   };
+
   ngOnInit() {
-    this.router.navigate(['/welcome']);
+
   }
 
   login() {
-    this.keycloak.login({ redirectUri: window.location.origin + '/welcome' });
-  }
-
-  register() {
-    this.authService.register(this.form).subscribe({
+    this.authService.login(this.form).subscribe({
       next: () => {
-        alert("Registrazione completata");
+        console.log("Login effettuato con successo");
+        this.router.navigate(['/welcome']);
       },
       error: () => {
-        alert("Errore registrazione");
+        alert("Errore durante il login");
       }
     });
+  }
+  register() {
+    this.router.navigate(['/register']);
   }
 }

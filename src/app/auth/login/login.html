@@ -1,5 +1,15 @@
 <div class="login-container">
   <div class="card">
+    <form (ngSubmit)="login()">
+
+    <input [(ngModel)]="form.username" name="username" placeholder="Username">
+
+    <input [(ngModel)]="form.password" name="password" type="password" placeholder="Password">
+
+    <button type="submit">Accedi</button>
+
+    </form>
+
     <div class="logo">🔐</div>
     <h1>Accedi</h1>
     <p>Verrai reindirizzato alla pagina di login sicura.</p>

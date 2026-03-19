@@ -16,9 +16,10 @@ export class UserService {
   loading = signal(false);
   error = signal<string | null>(null);
 
+
   loadUser() {
-    if(!this.keycloak.authenticated)
-      return;
+    if (!this.keycloak.authenticated || !this.keycloak.token) return;
+    if (this.user()) return;
 
     this.loading.set(true);
     this.error.set(null);
