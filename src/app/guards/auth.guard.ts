@@ -5,7 +5,7 @@ import { AuthService } from '../core/services/auth.service';
 
 export const authGuard: CanActivateFn = async () => {
   const keycloak = inject(Keycloak);
-  const mydb = inject(AuthService)
+  const mydb = inject(AuthService);
   // Se Keycloak non inizializzato, inizializza
   if (!keycloak.authenticated && !keycloak.token) {
     await keycloak.init({ onLoad: 'login-required', pkceMethod: 'S256' });
