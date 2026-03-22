@@ -15,12 +15,7 @@ export class AuthService {
     return this.http.get(`${this.api}/api/users/${id}`);
   }
 
-  login(data: { username: string; password: string }) {
-    console.log("username:", data.username);
-    return this.http.post(`${this.api}/api/auth/login`, data);
-  }
-
   register(data: RegisterRequest) {
-    return this.http.post(`${this.api}/api/auth/register`, data);
+    return this.http.post(`${this.api}/api/users`, data);
   }
 }

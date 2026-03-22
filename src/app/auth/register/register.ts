@@ -26,6 +26,7 @@ export class Register {
   register() {
     this.authService.register(this.form).subscribe({
       next: () => {
+        console.log("r");
         alert("Registrazione completata");
       },
       error: () => {

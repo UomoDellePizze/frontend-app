@@ -24,17 +24,6 @@ export class Login implements OnInit {
 
   }
 
-  login() {
-    this.authService.login(this.form).subscribe({
-      next: () => {
-        console.log("Login effettuato con successo");
-        this.router.navigate(['/welcome']);
-      },
-      error: () => {
-        alert("Errore durante il login");
-      }
-    });
-  }
   register() {
     this.router.navigate(['/register']);
   }
