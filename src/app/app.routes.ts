@@ -6,7 +6,7 @@ import { Login } from './auth/login/login';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'welcome',
+    redirectTo: 'api/auth/login',
     pathMatch: 'full'
   },
   {
