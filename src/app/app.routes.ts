@@ -1,26 +1,25 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { Welcome } from './welcome/welcome';
-import { Login } from './auth/login/login';
+import { Register } from './auth/register/register';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'api/auth/login',
+    redirectTo: 'welcome',
     pathMatch: 'full'
   },
   {
     path: 'api/auth/login',
-    redirectTo: 'welcome',
+    redirectTo: 'welcome'
   },
   {
     path: 'welcome',
     component: Welcome,
-    // Rotta protetta: solo utenti autenticati possono accedere
     canActivate: [authGuard]
   },
   {
     path: '**',
     redirectTo: 'welcome'
-  },
+  }
 ];

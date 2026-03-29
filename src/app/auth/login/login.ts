@@ -11,23 +11,17 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class Login implements OnInit {
+export class Login {
 
   private router = inject(Router);
   private keycloak = inject(Keycloak);
-
   form = {
-    username: '',
-    password: ''
+    keycloakId: '',
+    username: ''
   };
 
-  ngOnInit() {}
-
-  login() {
-    this.keycloak.login();
+  ngOnInit() {
+    this.router.navigate(["/welcome"]);
   }
 
-  register() {
-    this.router.navigate(['/register']);
-  }
 }
