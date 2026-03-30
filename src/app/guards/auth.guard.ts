@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Login } from '../auth/login/login';
+import { AuthService } from '../core/services/auth.service';
 
 export const authGuard: CanActivateFn = async () => {
   const keycloak = inject(Keycloak);
-  const http = inject(HttpClient);
+  const authService = inject(AuthService);
   const api = environment.apiUrl;
 
   // Quando la guard scatta, Keycloak ha già fatto il login
@@ -20,19 +21,19 @@ export const authGuard: CanActivateFn = async () => {
   const sub = keycloak.tokenParsed?.['sub'] as string;
   const username = keycloak.tokenParsed?.['preferred_username'] as string;
   const login = new Login();
-  login.form.keycloakId = sub;
+  login.form.sub = sub;
   login.form.username = username;
   console.log(login.form);
   try {
     await firstValueFrom(
-      http.post(`${api}/api/auth/login`, { login: login.form })
+      authService.userExists(`${api}/api/users/${login.form.sub}`)
     );
     console.log("Utente loggato");
     return true;
 
   } catch (err: any) {
     console.warn('Utente non trovato nel DB, logout:', {err: err.status, login: login.form});
-    //await keycloak.logout();
+    await keycloak.logout();
     return false;
   }
 };

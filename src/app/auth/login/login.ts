@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Keycloak from 'keycloak-js';
 import { FormsModule } from '@angular/forms';
+import { LoginRequest } from '../../core/models/login-request.model';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,8 @@ import { FormsModule } from '@angular/forms';
 export class Login {
 
   private router = inject(Router);
-  private keycloak = inject(Keycloak);
-  form = {
-    keycloakId: '',
+  form: LoginRequest = {
+    sub: '',
     username: ''
   };
 
